@@ -1,0 +1,29 @@
+<div class="container">
+<div class="card col-md-6 offset-3 mt-3">
+    <div class="card-header"> Enregistrement</div>
+    <div class="card-body">
+      
+      <form [formGroup]="addClientFormGroup" (ngSubmit)="handleEnregistreClient()">
+       
+        <div class="mb-3">
+           <label class=" form-label">Nom</label>
+           <input type="text" formControlName="nom" class="form-control">
+           <span class="text-danger" 
+           *ngIf="addClientFormGroup.controls['nom'].touched 
+           && addClientFormGroup.controls['nom'].errors
+           && addClientFormGroup.controls['nom'].errors!['required']"> veillez entrer un nom </span>
+        </div>
+        <div class="mb-3">
+            <label class=" form-label">Email</label>
+            <input type="text" formControlName="email" class="form-control">
+            <span class="text-danger" 
+            *ngIf="addClientFormGroup.controls['email'].touched 
+            && addClientFormGroup.controls['email'].errors
+            && addClientFormGroup.controls['email'].errors!['required']"> veillez entrer une adresse mail correcte </span>
+         </div>
+         <button class="btn btn-success" [disabled]="!addClientFormGroup.valid"> Envoyer</button>
+      </form>
+    </div>
+
+</div>
+</div>

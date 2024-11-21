@@ -1,0 +1,112 @@
+<div class="container mt-2">
+ <div class="row">
+    <div class="col col-md-6">
+        <div class="card">
+            <div class="card-header">Compte</div>
+            <div class="card-body">  
+                 <form [formGroup]=" rechercheCompteFormGroup" (ngSubmit)="HandleRechercheCompte()">
+                    <div class="input-group">
+                        <label class="input-group-text"> ID du Compte</label>
+                        <input type="text" formControlName="compteId" class="form-control">
+                        <button type="submit" class="btn btn-success ">Recherche</button>
+                    </div>
+                 </form>
+
+                 <ng-container  *ngIf="compteObservable" >
+                   <div class="mb-2">
+                    <label> CompteId :  </label>
+                    <label> <strong>{{ compteObservable.compteId}}</strong></label>
+                   </div>
+                   <div >
+                    <label> Solde : </label>
+                    <label> <strong>{{ compteObservable.solde | number:'1.2-2'}}</strong></label>
+                   </div>
+
+                   <table class="table">
+                    <thead>
+                       <tr>
+                          <th class=" text-end">ID  </th>
+                          <th class="text-end">DateOperation </th>
+                          <th class="text-end">TypeOperation</th>
+                          <th class="text-end">MontantOperation</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let op of compteObservable.operationDtos ">
+                        <td class="text-end">{{op.id}}</td>
+                        <td class="text-end">{{op.dateOperation|date:'dd-mm-yy-hh-mm-ss'}}</td>
+                        <td class="text-end">{{op.typeOperation }}</td>
+                        <td class="text-end">{{op.montant | number:'1.2-2'}}</td>
+                        
+                        </tr>
+                    </tbody>
+                   </table>
+                   <ul class="nav nav-pills">
+                    <li *ngFor=" let item of compteObservable.operationDtos; let page=index ">
+                        <a [ngClass]="page==pageCourant? 'btn-success': 'btn-outline-success'"  class="btn ms-1 mt-1" (click)="gotoPage(page)">
+                            {{page}}
+                        </a>
+                    </li>
+                   </ul>
+                
+                 </ng-container>
+                 </div>
+            </div>
+        </div> 
+    
+
+    <div class="col col-md-6" *ngIf="compteObservable">
+        <div class="card">
+            <div class="card-header">
+                operations
+            </div>
+
+            <div class="card-body">
+
+               
+                    <form  [formGroup]="operationFormGroup" (ngSubmit)="handleCompteOperation()">
+                          <div class="form-check form-check-inline">
+                             <input  class="form-check-input" type="radio" formControlName="typeOperation" value="DEBIT">
+                             <label class="form-check-label" for="debit">DEBIT:</label>
+                          </div>
+
+                          <div class="form-check form-check-inline">
+                             <input  class="form-check-input" type="radio" formControlName="typeOperation" value="CREDIT">
+                             <label class="form-check-label" for="credit">CREDIT:</label>
+                          </div>
+
+                          <div class="form-check form-check-inline">
+                             <input  class="form-check-input" type="radio" formControlName="typeOperation" value="TRANSFERT">
+                             <label class="form-check-label" for="transfert" >TRANSFERT:</label>
+                          </div>
+                          
+                          <div class="mb-4 mt-3">
+                            <label class="form-label">MONTANT:</label>
+                            <input class="form-control" type="text" formControlName="montant">
+                         </div>
+
+                          <div class="mb-3 mt-3" *ngIf="operationFormGroup.value.typeOperation=='TRANSFERT'">
+                             <label class="form-label">DESTINATION:</label>
+                             <input class="form-control" type="text" formControlName="destination">
+                          </div>
+
+                          <div class="mb-4 mt-3">
+                            <label class="form-label">DESCRIPTION:</label>
+                            <input class="form-control" type="text" formControlName="description">
+                         </div>
+                         <div class="d-grid mt-2">
+                            <button class="btn btn-success">Envoyer</button>
+                         </div>
+                         
+                    </form>
+            </div>
+
+        </div> 
+
+    </div>
+</div>
+
+</div>
+
+

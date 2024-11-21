@@ -1,0 +1,44 @@
+<div class="container mt-2" >
+    <div *ngIf="messageErreur" class=" text-danger">{{messageErreur}} </div>
+<div class="card" *ngIf="clients">
+    <div class="card-header">Clients de la Banque </div>
+    <div class="card-body">
+       <!--{{this.recherFormGroup.value| json }}-->  
+       <div *ngIf="recherFormGroup">
+        <form [formGroup]=" recherFormGroup" (ngSubmit)="handleRechercheClient()">
+          <div class="input-group">
+             <label class="input-group-text">Mot-cle</label>
+             <input type="text" formControlName="motCle" class="form-control">
+             <button class="btn btn-success">Recherche</button>
+          </div>
+         
+         </form>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let c of clients ">
+                    <td>{{c.id}}</td>
+                    <td>{{c.nom}}</td>
+                    <td>{{c.email}}</td>
+                    <td>
+                        <button class="btn btn-danger" (click)="handleSupprimer(c)" > 
+                             <span>Supprimer</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+</div>
